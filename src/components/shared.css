@@ -1,0 +1,55 @@
+/* shared component styles — SmartImage + small atoms used across sections */
+
+.smart-img {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--tint) 45%, #0c0906);
+  isolation: isolate;
+}
+.smart-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+}
+.smart-img[data-state="load"] img,
+.smart-img[data-state="fail"] img { opacity: 0; }
+.smart-img[data-state="ok"] img { opacity: 1; }
+.smart-img__glyph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: color-mix(in srgb, #fff 55%, var(--tint));
+  background:
+    radial-gradient(120% 120% at 30% 20%, color-mix(in srgb, var(--tint) 70%, #000) 0%, color-mix(in srgb, var(--tint) 30%, #000) 70%);
+}
+
+/* a reusable score dial used in journal + product */
+.dial {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* interactive 3D tilt wrapper */
+.tilt {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s var(--ease);
+  will-change: transform;
+}
+.tilt__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  background: radial-gradient(240px 240px at var(--gx, 50%) var(--gy, 0%), rgba(255, 240, 214, 0.14), transparent 60%);
+}
+.tilt:hover .tilt__glare { opacity: 1; }
+@media (pointer: coarse) { .tilt { transform: none !important; } }

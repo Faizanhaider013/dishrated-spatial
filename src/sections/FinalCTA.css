@@ -1,0 +1,22 @@
+.fc {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(7rem, 16vw, 13rem);
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+}
+.fc__bg { position: absolute; inset: 0; z-index: -1; }
+.fc__bg .smart-img { width: 100%; height: 100%; }
+.fc__scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 10, 9, 0.82), rgba(12, 10, 9, 0.94)),
+    radial-gradient(70% 60% at 50% 42%, rgba(239, 106, 46, 0.34), transparent 70%);
+}
+.fc__in { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.fc .eyebrow { color: var(--amber-hi); }
+.fc__head { font-size: clamp(2.6rem, 7.5vw, 6.5rem); font-weight: 320; color: var(--bone); }
+.fc__head em { color: var(--amber); }
+.fc__cta { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 1rem; }
+.fc__btn { font-size: var(--step-0); padding: 1.15em 2.1em; }
+.fc__sub { color: var(--soft); }

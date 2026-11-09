@@ -1,0 +1,75 @@
+.atmos {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  --p: 0;
+}
+
+/* drifting ember light pools */
+.atmos__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.atmos__orb--a {
+  width: 46vw; height: 46vw;
+  left: -8vw; top: calc(6vh + var(--p) * -22vh);
+  background: radial-gradient(circle, rgba(233, 162, 60, 0.42), transparent 62%);
+  animation: drift-a 26s ease-in-out infinite;
+}
+.atmos__orb--b {
+  width: 40vw; height: 40vw;
+  right: -6vw; top: calc(34vh + var(--p) * 26vh);
+  background: radial-gradient(circle, rgba(239, 106, 46, 0.34), transparent 62%);
+  animation: drift-b 32s ease-in-out infinite;
+}
+.atmos__orb--c {
+  width: 34vw; height: 34vw;
+  left: 40vw; bottom: calc(-6vh + var(--p) * -18vh);
+  background: radial-gradient(circle, rgba(122, 47, 42, 0.5), transparent 60%);
+  animation: drift-c 38s ease-in-out infinite;
+}
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, 4vh) scale(1.12); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50% { transform: translate(-7vw, -5vh) scale(0.92); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-4vw, 3vh) scale(1.15); }
+}
+
+/* faint technical grid — gives the void structure */
+.atmos__grid {
+  position: absolute;
+  inset: -2px;
+  background-image:
+    linear-gradient(rgba(236, 227, 211, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 227, 211, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(130% 100% at 50% 0%, #000 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(130% 100% at 50% 0%, #000 30%, transparent 85%);
+}
+
+/* edge vignette keeps focus centered */
+.atmos__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% 40%, transparent 55%, rgba(5, 4, 3, 0.7) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmos__orb { animation: none !important; }
+}
+@media (max-width: 640px) {
+  .atmos__orb { filter: blur(60px); opacity: 0.4; }
+}

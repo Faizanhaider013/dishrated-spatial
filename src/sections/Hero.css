@@ -1,0 +1,163 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero__canvas { position: absolute; inset: 0; z-index: 0; }
+.dish-orbit { width: 100%; height: 100%; touch-action: pan-y; }
+.plate-scene { width: 100%; height: 100%; touch-action: pan-y; }
+.plate-scene canvas { outline: none; }
+
+/* orbit fallback (no WebGL) */
+.orbit-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 6rem var(--gutter);
+  opacity: 0.5;
+}
+.orbit-fallback img {
+  width: clamp(120px, 15vw, 200px);
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--tint, #2a1d12);
+}
+
+/* legibility veil — a dark panel behind the copy so type always reads clearly */
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(95deg, var(--void) 14%, rgba(12, 10, 9, 0.9) 36%, rgba(12, 10, 9, 0.55) 52%, transparent 74%),
+    linear-gradient(0deg, var(--void) 4%, rgba(12, 10, 9, 0.5) 18%, transparent 36%),
+    linear-gradient(180deg, rgba(12, 10, 9, 0.65) 0%, transparent 22%);
+}
+
+.hero__content {
+  z-index: 2;
+  pointer-events: none;
+  max-width: 44rem;
+  padding-top: 5rem;
+}
+.hero__head {
+  font-size: var(--step-5);
+  margin-top: 1.4rem;
+  font-weight: 320;
+}
+.hero__line { display: block; }
+.hero__lede {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--bone-2);
+  max-width: 30ch;
+  margin-top: 1.8rem;
+  text-shadow: 0 1px 16px rgba(12, 10, 9, 0.8);
+}
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2.4rem;
+  pointer-events: auto;
+}
+
+/* live focus caption — updates as the carousel turns */
+.hero__focus {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 1.1rem 0.6rem 0.7rem;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--void) 62%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 16px 40px -20px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  max-width: calc(100vw - 2 * var(--gutter));
+}
+.hero__focus-score {
+  font-size: 1.6rem; font-weight: 700; line-height: 1;
+  color: var(--amber);
+  width: 2.6rem; height: 2.6rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(233, 162, 60, 0.12);
+  border: 1px solid rgba(233, 162, 60, 0.4);
+  flex: none;
+}
+.hero__focus-text { display: flex; flex-direction: column; min-width: 0; }
+.hero__focus-name { font-family: var(--display); font-size: 1.15rem; color: var(--bone); line-height: 1.1; white-space: nowrap; }
+.hero__focus-meta { color: var(--soft); }
+.hero__focus-flag { color: var(--amber-hi); font-size: 1rem; flex: none; }
+
+.hero__drag {
+  position: absolute;
+  z-index: 2;
+  right: var(--gutter);
+  bottom: 2.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--soft);
+}
+.hero__drag-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 0 rgba(233, 162, 60, 0.6);
+  animation: ping 2.4s var(--ease) infinite;
+}
+@keyframes ping {
+  0% { box-shadow: 0 0 0 0 rgba(233, 162, 60, 0.5); }
+  70%, 100% { box-shadow: 0 0 0 10px transparent; }
+}
+
+.hero__cue {
+  position: absolute;
+  z-index: 2;
+  left: var(--gutter);
+  bottom: 2.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--soft);
+}
+.hero__cue-line { width: 46px; height: 1px; background: currentColor; position: relative; overflow: hidden; }
+.hero__cue-line::after {
+  content: ""; position: absolute; inset: 0;
+  background: var(--amber);
+  transform: translateX(-100%);
+  animation: cue 2.4s var(--ease) infinite;
+}
+@keyframes cue { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+
+@media (max-width: 620px) {
+  .hero__drag { display: none; }
+  .hero__content { padding-top: 3rem; }
+}
+
+/* short viewports: the big headline + CTA fill the height, so the bottom
+   scroll/drag hints would collide with the buttons — retire them, and ease
+   the headline down a notch so everything fits and reads cleanly. */
+@media (max-height: 820px) {
+  .hero__cue, .hero__drag { display: none; }
+  .hero__head { font-size: var(--step-4); }
+  .hero__content { padding-top: 3.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__drag-dot, .hero__cue-line::after { animation: none; }
+}

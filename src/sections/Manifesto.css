@@ -1,0 +1,14 @@
+.mf {
+  border-top: 1px solid var(--line);
+  background:
+    radial-gradient(60% 60% at 80% 0%, rgba(239, 106, 46, 0.05), transparent 70%),
+    var(--ink);
+}
+.mf__para {
+  font-size: clamp(2rem, 1.3rem + 3.4vw, 4rem);
+  line-height: 1.1;
+  margin-top: 2rem;
+  max-width: 22ch;
+  font-weight: 340;
+}
+.mf__word { transition: none; }
